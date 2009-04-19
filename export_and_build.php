@@ -27,13 +27,19 @@ if (sizeof($xml->topQueries->topQuery) == 0) {
 	logger("XML Not Properly Loaded. Make sure debugging is on and try again.",$data);
 }
 else {
+	$email_message = "This is a report of the popular search queries for yesterday:\r\n\r\n"; # setting up email message
 	if ($f = @fopen($include_write_path."recent_top_searches.js", "w")) {
 		for($i = 0; $i < sizeof($xml->topQueries->topQuery); $i++) {
+			$k = $i + 1;
 			$query = $xml->topQueries->topQuery[$i]["query"];
 			if (!is_bad_word($query)) {
+				$email_message .= $k.": ".$query."\r\n";
 				$output = "document.write(\"<a href='http://".$gsa_hostname."/search?q=".str_replace(" ", "+", $query)."&sort=date%3AD%3AL%3Ad1&output=xml_no_dtd&ie=UTF-8&oe=UTF-8&client=".$gsa_frontend."&proxystylesheet=".$gsa_frontend."&site=".$gsa_collection."' class='recent_query'>".$query."</a> \");\r\n";
 				fwrite($f, $output);
-			}	
+			}
+			else {
+				$email_message .= $k.": ".$query." [Bad Word: not included]\r\n";
+			}
 		}
 		fclose($f);
 		logger("Javascript Include Written","");
@@ -46,7 +52,7 @@ else {
 }
 
 # delete report to keep GSA report interface somewhat manageable
-if ($delete_report) {
+if ($enable_delete) {
 	$delete_url = "http://".$gsa_hostname.":8000/EnterpriseController?actionType=deleteReport&reportType=".$gsa_report_type."&collection=".$gsa_collection."&reportName=".$gsa_report_name;
 	$delete_options = array("cookies" => $cookie->cookies);
 	if (@http_get($delete_url, $delete_options)) {
@@ -56,6 +62,20 @@ if ($delete_report) {
 		logger("Failed to Delete GSA Report",""); 
 		# this only fails if a connection can't be made. if connection is made but report doesn't delete it this won't catch it
 		# yeah, kind of pointless
+	}
+}
+
+# send copy of results as an email
+if ($enable_email) {
+	$email_subject = "[GSA Popular Queries] ".$gsa_report_name;
+	$f = @fopen($include_write_path."email.txt", "w");
+	fwrite($f, $email_to."\r\n".$email_subject."\r\n".$email_message);
+	fclose($f);
+	if (@mail($email_to,$email_subject,$email_message)) {
+		logger("Results Email Sent","");
+	}
+	else {
+		logger("Failed to Send Results Email. Check your mail configuration in php.ini.","");
 	}
 }
 
