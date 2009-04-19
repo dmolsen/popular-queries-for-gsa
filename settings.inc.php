@@ -21,8 +21,9 @@ $bad_words           = "shit,fuck,useyourimagination"; # separate bad words by c
 $enable_email        = false; # turn daily email of top results on or off
 $email_to            = "dmolsen@example.com"; # who you want to receive the daily email. separate by commas
 
-$enable_debug        = false; # turn verbose logging mode on or off, uses log/debug.log
+$enable_ga           = false; # turn on GA tracking of clicks on popular queries links. requires latest version of GA code
 $enable_delete       = false; # deletes report in GSA so the report interface doesn't get cluttered up
+$enable_debug        = false; # turn verbose logging mode on or off, uses log/debug.log
 
 
 ## report defaults, don't change if you don't have to
