@@ -6,9 +6,9 @@
 ## Created by: dave olsen, wvu web services
 ## Created on: april 16, 2009
 function logger($m,$extra) {
-	global $debug;
+	global $enable_debug;
 	$m = date("Y-m-d h:i:s")." - ".$m."\r\n";
-	if ($debug) {
+	if ($enable_debug) {
 		echo($m." See debug.log for more details.\r\n"); # write basic message to cmd prompt
 		$m = $m.$extra."\r\n\r\n";
 		$f = fopen('log/debug.log', 'a');
