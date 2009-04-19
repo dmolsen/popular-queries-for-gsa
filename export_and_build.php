@@ -68,9 +68,6 @@ if ($enable_delete) {
 # send copy of results as an email
 if ($enable_email) {
 	$email_subject = "[GSA Popular Queries] ".$gsa_report_name;
-	$f = @fopen($include_write_path."email.txt", "w");
-	fwrite($f, $email_to."\r\n".$email_subject."\r\n".$email_message);
-	fclose($f);
 	if (@mail($email_to,$email_subject,$email_message)) {
 		logger("Results Email Sent","");
 	}
