@@ -8,7 +8,7 @@
 function gsa_login() {
 	
 	# get the GSA settings from settings.inc.php
-	global $gsa_hostname, $gsa_username, $gsa_password;
+	global $gsa_hostname, $gsa_username, $gsa_password, $gsa_collection;
 	
 	# run a GET to set-up the session with your GSA
 	$response = @http_get("http://".$gsa_hostname.":8000/EnterpriseController", array("cookiestore" => "cookie_store/"));
@@ -17,7 +17,7 @@ function gsa_login() {
 		$cookie = http_parse_cookie($setup_headers["Set-Cookie"]);
 	}
 	else {
-		logger("GSA Session Setup Failed. Check your settings.",$response);
+		logger("GSA Session Setup Failed. Make sure your GSA hostname is correct.",$response);
 		exit;
 	}
 
@@ -32,6 +32,21 @@ function gsa_login() {
 		exit;
 	}
 
+	# POST to make sure we're looking at the correct reports, fixes bug with GSA
+	$report_post = array("actionType" => "listReports", "selectedCollection" => $gsa_collection); # fields that are POSTed
+	$report_url = "http://".$gsa_hostname.":8000/EnterpriseController";
+	$report_files = array();
+	$report_options = array("cookies" => $cookie->cookies);
+	$response = @http_post_fields($report_url, $report_post, $report_files, $report_options);
+	if (preg_match('/\<option\ selected\ value\="'.$gsa_collection.'"\>/i',$response)) {
+		logger("Switched to Correct Collection",$response);
+	}
+	else {
+		logger("POST to switch to correct collection has failed. Check your settings and make sure collection name is correct.",$response);
+		gsa_logout();
+		exit;
+	}
+	
 	return $cookie; # return cookie to be used for further authentication when generating or exporting report
 }
 
