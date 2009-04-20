@@ -13,6 +13,21 @@ require("lib/bad_words.inc.php"); # include the bad word checker
 
 $cookie = gsa_login(); # log into GSA & get the session cookie
 
+# POST to make sure we're looking at the correct reports, fixes bug with GSA
+$switch_report_post = array("actionType" => "listReports", "selectedCollection" => $gsa_collection); # fields that are POSTed
+$switch_report_url = "http://".$gsa_hostname.":8000/EnterpriseController";
+$switch_report_files = array();
+$switch_report_options = array("cookies" => $cookie->cookies);
+$response = @http_post_fields($switch_report_url, $switch_report_post, $switch_report_files, $switch_report_options);
+if (preg_match('/\<option\ selected\ value\="'.$gsa_collection.'"\>/i',$response)) {
+	logger("Switched to Correct Collection",$response);
+}
+else {
+	logger("POST to switch to correct collection has failed. Check your settings and make sure collection name is correct.",$response);
+	gsa_logout();
+	exit;
+}
+
 # GET the generated report from GSA
 $export_url = "http://".$gsa_hostname.":8000/EnterpriseController?collection=".$gsa_collection."&reportName=".$gsa_report_name."&actionType=exportSummaryReport";
 $export_options = array("cookies" => $cookie->cookies);

@@ -31,21 +31,6 @@ function gsa_login() {
 		logger("GSA Login Failed. Check the admin credentials, cookie store path & cookie store permissions.",$response);
 		exit;
 	}
-
-	# POST to make sure we're looking at the correct reports, fixes bug with GSA
-	$report_post = array("actionType" => "listReports", "selectedCollection" => $gsa_collection); # fields that are POSTed
-	$report_url = "http://".$gsa_hostname.":8000/EnterpriseController";
-	$report_files = array();
-	$report_options = array("cookies" => $cookie->cookies);
-	$response = @http_post_fields($report_url, $report_post, $report_files, $report_options);
-	if (preg_match('/\<option\ selected\ value\="'.$gsa_collection.'"\>/i',$response)) {
-		logger("Switched to Correct Collection",$response);
-	}
-	else {
-		logger("POST to switch to correct collection has failed. Check your settings and make sure collection name is correct.",$response);
-		gsa_logout();
-		exit;
-	}
 	
 	return $cookie; # return cookie to be used for further authentication when generating or exporting report
 }
