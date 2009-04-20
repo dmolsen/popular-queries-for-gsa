@@ -17,6 +17,10 @@ $gsa_with_results    = "true"; # use searches that returned results, can be 'fal
 $include_write_path  = "../test_path/"; # path to where the JS include is to be written too
 $bad_words           = "shit,fuck,useyourimagination"; # separate bad words by commas to have search queries using those words removed
 
+# if you want to add divs, bullets, list item tags this would be the place to do it
+$pre_output          = " "; # HTML that goes before the popular query link
+$post_output         = " "; # HTML that goes after the popular query link
+
 ## because bad words may still slip through you may want the report emailed to you each day just in case
 $enable_email        = false; # turn daily email of top results on or off
 $email_to            = "dmolsen@example.com"; # who you want to receive the daily email. separate by commas

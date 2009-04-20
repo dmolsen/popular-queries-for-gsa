@@ -49,11 +49,11 @@ else {
 			$query = $xml->topQueries->topQuery[$i]["query"];
 			if (!is_bad_word($query)) {
 				$email_message .= $k.": ".$query."\r\n";
-				$output = "document.write(\"<a href='http://".$gsa_hostname."/search?q=".str_replace(" ", "+", $query)."&sort=date%3AD%3AL%3Ad1&output=xml_no_dtd&ie=UTF-8&oe=UTF-8&client=".$gsa_frontend."&proxystylesheet=".$gsa_frontend."&site=".$gsa_collection."'"; 
+				$output = "document.write(\"".$pre_output."<a href='http://".$gsa_hostname."/search?q=".str_replace(" ", "+", $query)."&sort=date%3AD%3AL%3Ad1&output=xml_no_dtd&ie=UTF-8&oe=UTF-8&client=".$gsa_frontend."&proxystylesheet=".$gsa_frontend."&site=".$gsa_collection."'"; 
 				if ($enable_ga) {
 					$output .= " onClick='javascript: pageTracker._trackPageview(\\\"/popular_queries/".str_replace(" ", "+", $query)."\\\");'";
 				}
-				$output .= " class='recent_query'>".$query."</a> \");\r\n";
+				$output .= " class='recent_query'>".$query."</a>".$post_output."\");\r\n";
 				fwrite($f, $output);
 			}
 			else {
