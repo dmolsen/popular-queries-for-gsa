@@ -40,6 +40,10 @@ If you have it already you'll see the module 'http' listed. If you don't see it 
 
 <code>pear -d memory_limit=16M install pecl/pecl_http</code>
 
+You'll then need to edit your php.ini file. Add the following to the extensions section of it:
+
+<code>extension=http.so</code>
+
 h3. Download 'Popular Queries for GSA'
 
 You can do this two ways. If you use Git you can type the following
