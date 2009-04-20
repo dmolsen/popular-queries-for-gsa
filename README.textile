@@ -79,6 +79,12 @@ crontab. If you need to use a different account to run the cron jobs
 make sure that account has appropriate permissions to write to the
 popular-queries-for-gsa log & cookie store folders.
 
+Example cron jobs follow. The first job runs at 12.30am and the second
+at 12.45am.
+
+<code>30 0 * * * php /path/to/generate_report.php</code><br />
+<code>45 0 * * * php /path/to/export_and_build.php</code>
+
 h3. Customizing Look & Feel of 'Popular Queries for GSA'
 
 Coming Soon
