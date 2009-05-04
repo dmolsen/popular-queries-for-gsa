@@ -11,12 +11,12 @@ function logger($m,$extra) {
 	if ($enable_debug) {
 		echo($m." See debug.log for more details.\r\n"); # write basic message to cmd prompt
 		$m = $m.$extra."\r\n\r\n";
-		$f = fopen('log/debug.log', 'a');
+		$f = fopen($path_to_pq."log/debug.log", "a");
 		fwrite($f, $m);
 		fclose($f);
 	}
 	else {
-		$f = fopen('log/production.log', 'a');
+		$f = fopen($path_to_pq."log/production.log", "a");
 		fwrite($f, $m);
 		fclose($f);
 	}	
