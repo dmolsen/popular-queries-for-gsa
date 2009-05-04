@@ -104,8 +104,8 @@ not a list.
 
 1. Copy & paste the following code into your template:
 
-<code>&lt;script type="text/javascript" src="http://location.of.include/recent_top_searches.js"&gt;</code><br />
-<code>&lt;/script&gt;&lt;noscript&gt;No popular queries from yesterday to show.&lt;/noscript&gt;</code>
+<code><script type="text/javascript" src="http://location.of.include/recent_top_searches.js"></code><br />
+<code></script><noscript>No popular queries from yesterday to show.</noscript></code>
 
 2. Update the src address.
 3. Done!
