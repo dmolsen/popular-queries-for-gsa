@@ -1,5 +1,5 @@
 TITLE: Popular Queries for GSA
-VERSION: 1.0
+VERSION: 1.1
 CREATOR: dave olsen, wvu web services
 ONLINE: http://github.com/dmolsen/popular-queries-for-gsa/
 
@@ -12,7 +12,7 @@ prevent users from including inappropriate queries in the list,
 'Popular Queries for GSA' also includes the ability to censor queries.
 
 == FEATURES ==
-v1.0 features:
+v1.1 features:
 
  * Produces a JavaScript include that contains popular queries that can
    easily be embedded into your GSA templates
@@ -23,7 +23,7 @@ v1.0 features:
  * Deletes generated reports to keep your GSA reporting interface clean
 
 == DEMO ==
-Not available yet.
+WVU is now including popular queries on http://search.wvu.edu/.
 
 == REQUIREMENTS ==
 
@@ -48,7 +48,8 @@ You'll then need to edit your php.ini file. Add the following to the extensions 
 
 extension=http.so
 
-2. Download 'Popular Queries for GSA'
+== Download 'Popular Queries for GSA' ==
+
 You can do this two ways. If you use Git you can type the following
 at the command prompt in the directory* you want this installed:
 
@@ -62,7 +63,10 @@ http://github.com/dmolsen/popular-queries-for-gsa/
 * - git will create a directly called popular-queries-for-gsa so no
     need to duplicate it
 
-3. Edit settings.inc.php
+== Edit settings.inc.php ==
+First copy settings.default.inc.php to settings.inc.php. This way future
+changes to the settings file won't overwrite your defaults.
+
 All settings (e.g. GSA username/password) for 'Popular Queries for GSA'
 are located in settings.inc.php. You can also enable or disable features
 in that file. 
@@ -74,7 +78,7 @@ Note #2: While 'Popular Queries for GSA' doesn't need to be in a web-
 accessible folder (and probably shouldn't) the $include_write_path should
 be to a web-accessible folder.
 
-4. Set-up Cron Jobs
+== Set-up Cron Jobs ==
 To automate generation of your popular queries include file edit your
 crontab. If you need to use a different account to run the cron jobs
 make sure that account has appropriate permissions to write to the
@@ -86,8 +90,22 @@ at 12.45am.
 30 0 * * * php /path/to/generate_report.php
 45 0 * * * php /path/to/export_and_build.php
 
-5. Customizing Look & Feel of 'Popular Queries for GSA'
-Coming Soon
+== Customizing Look & Feel of 'Popular Queries for GSA' ==
+Via settings.inc.php you can edit the general look and feel of your
+popular queries list. The directions there should be fairly straight-
+forward. By default 'Popular Queries for GSA' builds an unordered list.
+Also, by default, each popular query link gets the class 'recent_query'.
 
-6. Adding the JavaScript Include to Your GSA Template
-Coming Soon
+== Adding the JavaScript Include to Your GSA Template ==
+If you haven't modified the XSLT for your GSA you may want to add the
+following to the footer area. Note that if you do it will show up
+on every page produced by your GSA. You also may want to make sure it's
+not a list.
+
+a. Copy & paste the following code into your template:
+
+<code>&lt;script type="text/javascript" src="http://location.of.include/recent_top_searches.js"&gt;</code><br />
+<code>&lt;/script&gt;&lt;noscript&gt;No popular queries from yesterday to show.&lt;/noscript&gt;</code>
+
+b. Update the src address.
+c. Done!

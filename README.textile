@@ -1,5 +1,5 @@
 TITLE: Popular Queries for GSA
-VERSION: 1.0
+VERSION: 1.1
 CREATOR: dave olsen, wvu web services
 
 h2. OVERVIEW
@@ -8,7 +8,7 @@ h2. OVERVIEW
 
 h2. FEATURES
 
-v1.0 features:
+v1.1 features:
 
  * Produces a JavaScript include that contains popular queries that can
    easily be embedded into your GSA templates
@@ -20,7 +20,7 @@ v1.0 features:
 
 h2. DEMO
 
-Not available yet.
+WVU is now including popular queries on our "search page":http://search.wvu.edu/.
 
 h2. REQUIREMENTS
 
@@ -61,6 +61,9 @@ link on:
 
 h3. Edit settings.inc.php
 
+First copy settings.default.inc.php to settings.inc.php. This way future
+changes to the settings file won't overwrite your defaults.
+
 All settings (e.g. GSA username/password) for 'Popular Queries for GSA'
 are located in settings.inc.php. You can also enable or disable features
 in that file. 
@@ -69,7 +72,7 @@ p(. Note #1: In the current release (v1.0) the "bad words" filter is not very
 robust and should be edited.
 
 p(. Note #2: While 'Popular Queries for GSA' doesn't need to be in a web-
-accessible folder (and probably shouldn't) the $include_write_path should
+accessible folder (and probably shouldn't) the $path_to_include should
 be to a web-accessible folder.
 
 h3. Set-up Cron Jobs
@@ -87,8 +90,22 @@ at 12.45am.
 
 h3. Customizing Look & Feel of 'Popular Queries for GSA'
 
-Coming Soon
+Via settings.inc.php you can edit the general look and feel of your
+popular queries list. The directions there should be fairly straight-
+forward. By default 'Popular Queries for GSA' builds an unordered list.
+Also, by default, each popular query link gets the class 'recent_query'.
 
 h3. Adding the JavaScript Include to Your GSA Template
 
-Coming Soon
+If you haven't modified the XSLT for your GSA you may want to add the
+following to the footer area. Note that if you do it will show up
+on every page produced by your GSA. You also may want to make sure it's
+not a list.
+
+1. Copy & paste the following code into your template:
+
+<code>&lt;script type="text/javascript" src="http://location.of.include/recent_top_searches.js"&gt;</code><br />
+<code>&lt;/script&gt;&lt;noscript&gt;No popular queries from yesterday to show.&lt;/noscript&gt;</code>
+
+2. Update the src address.
+3. Done!
