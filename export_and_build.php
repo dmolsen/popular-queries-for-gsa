@@ -43,23 +43,27 @@ if (sizeof($xml->topQueries->topQuery) == 0) {
 }
 else {
 	$email_message = "This is a report of the popular search queries for yesterday:\r\n\r\n"; # setting up email message
-	if ($f = @fopen($include_write_path."recent_top_searches.js", "w")) {
+	if ($f = @fopen($path_to_include."recent_top_searches.js", "w")) {
+		$output = "document.write(\"".$pre_list_output."\");\r\n";
+		fwrite($f, $output);
 		for($i = 0; $i < sizeof($xml->topQueries->topQuery); $i++) {
 			$k = $i + 1;
 			$query = $xml->topQueries->topQuery[$i]["query"];
 			if (!is_bad_word($query)) {
 				$email_message .= $k.": ".$query."\r\n";
-				$output = "document.write(\"".$pre_output."<a href='http://".$gsa_hostname."/search?q=".str_replace(" ", "+", $query)."&sort=date%3AD%3AL%3Ad1&output=xml_no_dtd&ie=UTF-8&oe=UTF-8&client=".$gsa_frontend."&proxystylesheet=".$gsa_frontend."&site=".$gsa_collection."'"; 
+				$output = "document.write(\"".$pre_item_output."<a href='http://".$gsa_hostname."/search?q=".str_replace(" ", "+", $query)."&sort=date%3AD%3AL%3Ad1&output=xml_no_dtd&ie=UTF-8&oe=UTF-8&client=".$gsa_frontend."&proxystylesheet=".$gsa_frontend."&site=".$gsa_collection."'"; 
 				if ($enable_ga) {
 					$output .= " onClick='javascript: pageTracker._trackPageview(\\\"/popular_queries/".str_replace(" ", "+", $query)."\\\");'";
 				}
-				$output .= " class='recent_query'>".$query."</a>".$post_output."\");\r\n";
+				$output .= " class='recent_query'>".$query."</a>".$post_item_output."\");\r\n";
 				fwrite($f, $output);
 			}
 			else {
 				$email_message .= $k.": ".$query." [Bad Word: not included]\r\n";
 			}
 		}
+		$output = "document.write(\"".$post_list_output."\");\r\n";
+		fwrite($f, $output);
 		fclose($f);
 		logger("Javascript Include Written","");
 	}
