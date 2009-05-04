@@ -11,7 +11,7 @@ function gsa_login() {
 	global $gsa_hostname, $gsa_username, $gsa_password, $gsa_collection;
 	
 	# run a GET to set-up the session with your GSA
-	$response = @http_get("http://".$gsa_hostname.":8000/EnterpriseController", array("cookiestore" => "cookie_store/"));
+	$response = @http_get("http://".$gsa_hostname.":8000/EnterpriseController", array("cookiestore" => $path_to_pq."cookie_store/"));
 	$setup_headers = http_parse_headers($response);
 	if (preg_match("/0;URL=\/EnterpriseController\?actionType=reload&lastcmd=login/i",$setup_headers["Refresh"])) {
 		$cookie = http_parse_cookie($setup_headers["Set-Cookie"]);
