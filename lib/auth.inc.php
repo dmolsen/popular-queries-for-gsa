@@ -8,7 +8,7 @@
 function gsa_login() {
 	
 	# get the GSA settings from settings.inc.php
-	global $gsa_hostname, $gsa_username, $gsa_password, $gsa_collection;
+	global $gsa_hostname, $gsa_username, $gsa_password, $gsa_collection, $path_to_pq;
 	
 	# run a GET to set-up the session with your GSA
 	$response = @http_get("http://".$gsa_hostname.":8000/EnterpriseController", array("cookiestore" => $path_to_pq."cookie_store/"));

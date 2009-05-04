@@ -6,7 +6,7 @@
 ## Created by: dave olsen, wvu web services
 ## Created on: april 16, 2009
 function logger($m,$extra) {
-	global $enable_debug;
+	global $enable_debug, $path_to_pq;
 	$m = date("Y-m-d h:i:s")." - ".$m."\r\n";
 	if ($enable_debug) {
 		echo($m." See debug.log for more details.\r\n"); # write basic message to cmd prompt
