@@ -14,12 +14,20 @@ $gsa_hostname        = "search.wvu.edu"; # the hostname for your search applianc
 $gsa_top_count       = "20"; # the number of results to show in final include
 $gsa_with_results    = "true"; # use searches that returned results, can be 'false' for searches that didn't return results
 
-$include_write_path  = "../test_path/"; # path to where the JS include is to be written too
+## file paths, these paths assume:
+## a) pop queries is not in a web accessible location and
+## b) your js include is bring written to a completely different location
+$path_to_include     = "../test_path/"; # path to where the JS include is to be written too
+$path_to_pq          = "/path/to/popular-queries-for-gsa/"; # trailing slash required. full path to popular queries so log and cookie writes are correctly written
+
+## censor bad words
 $bad_words           = "shit,fuck,useyourimagination"; # separate bad words by commas to have search queries using those words removed
 
-# if you want to add divs, bullets, list item tags this would be the place to do it
-$pre_output          = " "; # HTML that goes before the popular query link
-$post_output         = " "; # HTML that goes after the popular query link
+## if you want to add divs, bullets, list item tags this would be the place to do it
+$pre_list_output     = "<ul>"; # HTML that goes before the popular query list
+$pre_item_output     = "<li>"; # HTML that goes before the popular query link
+$post_item_output    = "</li>"; # HTML that goes after the popular query link
+$post_list_output    = "</ul>"; # HTML that goes after the popular query list
 
 ## because bad words may still slip through you may want the report emailed to you each day just in case
 $enable_email        = false; # turn daily email of top results on or off
@@ -28,7 +36,6 @@ $email_to            = "dmolsen@example.com"; # who you want to receive the dail
 $enable_ga           = false; # turn on GA tracking of clicks on popular queries links. requires latest version of GA code
 $enable_delete       = false; # deletes report in GSA so the report interface doesn't get cluttered up
 $enable_debug        = false; # turn verbose logging mode on or off, uses log/debug.log
-
 
 ## report defaults, don't change if you don't have to
 $gsa_report_type = "1";
